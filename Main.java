@@ -55,6 +55,8 @@ public class Main {
   }
 
   public static void main(String[] args) {
+	  
+
     SwingUtilities.invokeLater(new Runnable(){
 
       @Override
@@ -62,6 +64,16 @@ public class Main {
         new Main();
       }
     });
+    Backgroundsound test = new Backgroundsound();
+    while (true) {
+        try {
+            test.main_sound();
+            Thread.sleep(54000);
+        } catch (Exception e) {
+
+        }
+    }
+
   }
 
 
