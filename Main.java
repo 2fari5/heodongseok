@@ -28,10 +28,14 @@ public class Main extends JFrame {
 	private int playerHeight = player.getHeight(null);
 
 	private boolean up, down, left, right;
-	
+
 	public Main() {
-		setTitle("Kitty Game");
+		
+		setTitle("Coin game");
 		setVisible(true);
+		playSound("src/sound/BGM.wav", true);
+		playerX = (500 - playerWidth)/2;
+		playerY = (500 - playerHeight)/2;
 		setSize(500,500);
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -92,16 +96,13 @@ public class Main extends JFrame {
 			playerX -= 3;
 		if (right && playerX + playerWidth + 3 < 500)
 			playerX += 3;
-		playSound("src/sound/BGM.wav", true);
-			}
+	}
 	public void playSound(String pathName, boolean isLoop) {
 		try {
 			clip = AudioSystem.getClip();
 			File audioFile = new File(pathName);
 			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-			
 			clip.open(audioStream);
-			
 			clip.start();
 			if (isLoop)
 				clip.loop(Clip.LOOP_CONTINUOUSLY);
@@ -111,19 +112,14 @@ public class Main extends JFrame {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-			
 		}
-		
 	}	// 오디오 재생
-
-	
 
 	public void paint(Graphics g) {
 		bufferImage = createImage(500,500);
 		screenGraphic = bufferImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(bufferImage, 0, 0, null);
-		
 	}
 
 	public void screenDraw(Graphics g) {
@@ -137,7 +133,6 @@ public class Main extends JFrame {
 
 	public static void main(String[] args) {
 		new Main();
-		
 	}
 
 }
