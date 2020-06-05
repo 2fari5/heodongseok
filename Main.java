@@ -12,7 +12,7 @@ import javax.swing.JFrame;
 public class Main extends JFrame {
 	private Image bufferImage;
 	private Graphics screenGraphic;
-
+	private int score;
 	private Clip clip;
 
 	private Image player = new ImageIcon("src/images/kitty.png").getImage();
@@ -25,6 +25,7 @@ public class Main extends JFrame {
 
 	public Main() {
 		setTitle("Kitty Game");
+		score = 0;
 		setVisible(true);
 		setSize(500,500);
 		setLocationRelativeTo(null);
@@ -98,8 +99,9 @@ public class Main extends JFrame {
 	public void screenDraw(Graphics g) {
 
 		g.drawImage(player, playerX, playerY, null);
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial", Font.BOLD, 40));
+		g.setColor(Color.RED);
+		g.setFont(new Font("Arial", Font.BOLD, 20));
+		g.drawString("SCORE : " + score, 330, 60);
 
 		this.repaint();
 	}
