@@ -15,13 +15,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
-
 public class Main extends JFrame {
 	private Image bufferImage;
 	private Graphics screenGraphic;
 	private Clip clip;
 	private int fishX, fishY;
 	private int score;
+    
 	
 	private Image player = new ImageIcon("src/images/kitty1.png").getImage();
     private Image background = new ImageIcon("src/images/h2.png").getImage();
@@ -30,12 +30,11 @@ public class Main extends JFrame {
 	private int playerX, playerY;
 	private int playerWidth = player.getWidth(null);
 	private int playerHeight = player.getHeight(null);
-	private int fishWidth = fish.getWidth(null);
-	private int fishHeight = fish.getHeight(null);	
+	
 	private boolean up, down, left, right;
 
 	public Main() {
-		
+		 GUI gui = new GUI();
 		setTitle("Kitty Game");
 		playSound("src/sound/BGM.wav", true); 
 		setVisible(true);
@@ -48,6 +47,9 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				if (keyCode == KeyEvent.VK_ESCAPE)              
+					gui.setVisible(true);
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 					up = true;
@@ -60,10 +62,10 @@ public class Main extends JFrame {
 					break;
 				case KeyEvent.VK_RIGHT:
 					right = true;
+
 					break;
 				}
 			}
-			
 
 			public void keyReleased(KeyEvent e) {
 				switch (e.getKeyCode()) {
@@ -90,18 +92,9 @@ public class Main extends JFrame {
 				e.printStackTrace();
 			}
 			keyProcess();
-			Eatfish();
+
 		}
-		
-		}
-	public void Eatfish()
-	{
-		if (playerX + playerWidth > fishX && fishX + fishWidth > playerX && playerY + playerHeight > fishY && fishY + fishHeight > playerY) 
-		{
-			fishX = (int)(Math.random()*(501-playerWidth));
-			fishY = (int)(Math.random()*(501-playerHeight-30))+30;
-		}
-		}
+	}
 	
 	public void playSound(String pathName, boolean isLoop) {
 		try {
@@ -131,7 +124,6 @@ public class Main extends JFrame {
 		if (right && playerX + playerWidth + 3 < 1000)
 			playerX += 3;
 	}
-
 
 	public void paint(Graphics g) {
 		bufferImage = createImage(1000,900);
