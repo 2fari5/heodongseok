@@ -16,44 +16,48 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Main extends JFrame {
-
 	private Image bufferImage;
 	private Graphics screenGraphic;
 	private Clip clip;
 	private int fishX, fishY;
-	private int meatX, meatY;
-
 	private int score, Time;
-
-	private Image player = new ImageIcon("src/images/pig1.png").getImage();
-	private Image background = new ImageIcon("src/images/h2.png").getImage();
-	private Image fish = new ImageIcon("src/images/fish1.png").getImage();
-	private Image meat = new ImageIcon("src/images/meat.png").getImage();
+	private int meatX, meatY;
+    
+	private Image player = new ImageIcon("src/images/pig.png").getImage();
+    private Image background = new ImageIcon("src/images/h2.png").getImage();
+    private Image fish = new ImageIcon("src/images/fish.png").getImage();
+    private Image meat = new ImageIcon("src/images/meat.png").getImage();
+    
 
 	private int playerX, playerY;
 	private int playerWidth = player.getWidth(null);
 	private int playerHeight = player.getHeight(null);
-
+	private int fishWidth = fish.getWidth(null);
+	private int fishHeight = fish.getHeight(null);
 	private boolean up, down, left, right;
 
 	public Main() {
 		setTitle("Kitty Game");
-		playSound("src/sound/BackgroundMusic.wav", true);
+		playSound("src/sound/BackgroundMusic.wav", true); 
 		setVisible(true);
-		setSize(1000, 900);
+		setSize(1000,900);
 		fishX = 250;
 		fishY = 250;
 		meatX = 300;
 		meatY = 300;
 		score = 0;
-		playerX = 10;
-		playerY = 35;
-
+		playerX=10;
+		playerY=35;
+		
+		GUI gui = new GUI();
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				if (keyCode == KeyEvent.VK_ESCAPE)
+					gui.setVisible(true);	
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 					up = true;
@@ -68,7 +72,6 @@ public class Main extends JFrame {
 					right = true;
 					break;
 				}
-
 			}
 
 			public void keyReleased(KeyEvent e) {
@@ -88,7 +91,7 @@ public class Main extends JFrame {
 				}
 			}
 		});
-
+		
 		while (true) {
 			try {
 				Thread.sleep(20);
@@ -96,11 +99,20 @@ public class Main extends JFrame {
 				e.printStackTrace();
 			}
 			keyProcess();
+			Eatfish();
 
 		}
-
 	}
-
+	public void Eatfish()
+	{
+		if (playerX + playerWidth > fishX && fishX + fishWidth > playerX && playerY + playerHeight > fishY && fishY + fishHeight > playerY)
+		{
+			playSound("src/sound/Eat.wav", false);
+			fishX = (int)(Math.random()*(501-playerWidth));
+			fishY = (int)(Math.random()*(501-playerHeight-30))+30;
+			
+		}
+	}
 	public void playSound(String pathName, boolean isLoop) {
 		try {
 			clip = AudioSystem.getClip();
@@ -110,7 +122,6 @@ public class Main extends JFrame {
 			clip.start();
 			if (isLoop)
 				clip.loop(Clip.LOOP_CONTINUOUSLY);
-
 		} catch (LineUnavailableException e) {
 			e.printStackTrace();
 		} catch (UnsupportedAudioFileException e) {
@@ -118,8 +129,7 @@ public class Main extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-	} // 오디오 재생
+	}	// 오디오 재생
 
 	public void keyProcess() {
 		if (up && playerY - 3 > 30)
@@ -133,20 +143,19 @@ public class Main extends JFrame {
 	}
 
 	public void paint(Graphics g) {
-		bufferImage = createImage(1000, 900);
+		bufferImage = createImage(1000,900);
 		screenGraphic = bufferImage.getGraphics();
 		screenDraw(screenGraphic);
 		g.drawImage(bufferImage, 0, 0, null);
-
 	}
 
 	public void screenDraw(Graphics g) {
 
 		g.drawImage(background, 0, 0, null);
-		g.drawImage(player, playerX, playerY, null);
+		g.drawImage(player,  playerX, playerY, null);
 		g.setColor(Color.RED);
-		g.setFont(new Font("Arial", Font.BOLD, 35));
-		g.drawString("SCORE : " + score, 750, 62);
+		g.setFont(new Font("Arial", Font.BOLD, 20));
+		g.drawString("SCORE : " + score, 330, 60);
 		g.drawImage(fish, fishX, fishY, null);
 		g.drawImage(meat, meatX, meatY, null);
 
@@ -154,8 +163,13 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		new StartScreen();
+		try {
+			Thread.sleep(7000);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
 		new Main();
-
 	}
 
 }
