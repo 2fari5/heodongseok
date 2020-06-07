@@ -23,9 +23,15 @@ public class Main extends JFrame {
 	private int score, Time;
 	private int meatX, meatY;
     
+<<<<<<< HEAD
 	private Image player = new ImageIcon("src/images/pig.png").getImage();
     private Image background = new ImageIcon("src/images/h2.png").getImage();
     private Image fish = new ImageIcon("src/images/fish.png").getImage();
+=======
+	private Image player = new ImageIcon("src/images/kitty1.png").getImage();
+    private Image background = new ImageIcon("src/images/h2.png").getImage();
+    private Image fish = new ImageIcon("src/images/fish1.png").getImage();
+>>>>>>> 9eb50a71d4cec327cc600d0ebea229a1434a7c63
     private Image meat = new ImageIcon("src/images/meat.png").getImage();
     
 
@@ -34,6 +40,11 @@ public class Main extends JFrame {
 	private int playerHeight = player.getHeight(null);
 	private int fishWidth = fish.getWidth(null);
 	private int fishHeight = fish.getHeight(null);
+<<<<<<< HEAD
+=======
+	private int meatWidth = meat.getWidth(null);
+	private int meatHeight = meat.getHeight(null);
+>>>>>>> 9eb50a71d4cec327cc600d0ebea229a1434a7c63
 	private boolean up, down, left, right;
 
 	public Main() {
@@ -100,6 +111,7 @@ public class Main extends JFrame {
 			}
 			keyProcess();
 			Eatfish();
+<<<<<<< HEAD
 
 		}
 	}
@@ -112,6 +124,31 @@ public class Main extends JFrame {
 			fishY = (int)(Math.random()*(501-playerHeight-30))+30;
 			
 		}
+=======
+			Eatmeat();
+
+		}
+	}
+	public void Eatfish(){
+	
+		
+		if (playerX + playerWidth > fishX && fishX + fishWidth > playerX && playerY + playerHeight > fishY && fishY + fishHeight > playerY) {
+		    score+=100;
+			fishX = (int)(Math.random()*(501-playerWidth));
+			fishY = (int)(Math.random()*(501-playerHeight-30))+30;
+		
+	}
+	}
+	
+	public void Eatmeat() {
+	
+		if (playerX + playerWidth > meatX && meatX + meatWidth > playerX && playerY + playerHeight > meatY && meatY + meatHeight > playerY) {
+			score+=200;
+			meatX = (int)(Math.random()*(501-playerWidth));
+			meatY = (int)(Math.random()*(501-playerHeight-30))+30;
+	
+	}
+>>>>>>> 9eb50a71d4cec327cc600d0ebea229a1434a7c63
 	}
 	public void playSound(String pathName, boolean isLoop) {
 		try {
