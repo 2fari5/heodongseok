@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
@@ -47,7 +46,7 @@ public class StartScreen extends JFrame {
 	
 	public StartScreen() {
 		setUndecorated(true);
-		setTitle("Dynamic Beat");
+		setTitle("Start Screen");
 		setSize(1000,900);
 		setResizable(false);
 		setLocationRelativeTo(null);
