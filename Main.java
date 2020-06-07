@@ -22,7 +22,6 @@ public class Main extends JFrame {
 	private int fishX, fishY;
 	private int score;
     
-	
 	private Image player = new ImageIcon("src/images/kitty1.png").getImage();
     private Image background = new ImageIcon("src/images/h2.png").getImage();
     private Image fish = new ImageIcon("src/images/fish1.png").getImage();
@@ -30,11 +29,10 @@ public class Main extends JFrame {
 	private int playerX, playerY;
 	private int playerWidth = player.getWidth(null);
 	private int playerHeight = player.getHeight(null);
-	
+
 	private boolean up, down, left, right;
 
 	public Main() {
-		 GUI gui = new GUI();
 		setTitle("Kitty Game");
 		playSound("src/sound/BGM.wav", true); 
 		setVisible(true);
@@ -47,9 +45,6 @@ public class Main extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				if (keyCode == KeyEvent.VK_ESCAPE)              
-					gui.setVisible(true);
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 					up = true;
@@ -62,7 +57,6 @@ public class Main extends JFrame {
 					break;
 				case KeyEvent.VK_RIGHT:
 					right = true;
-
 					break;
 				}
 			}
@@ -95,7 +89,6 @@ public class Main extends JFrame {
 
 		}
 	}
-	
 	public void playSound(String pathName, boolean isLoop) {
 		try {
 			clip = AudioSystem.getClip();
@@ -146,6 +139,12 @@ public class Main extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		new StartScreen();
+		try {
+			Thread.sleep(7000);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}	
 		new Main();
 	}
 
