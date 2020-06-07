@@ -41,7 +41,7 @@ public class Main extends JFrame {
 
 	public Main() {
 		setTitle("Kitty Game");
-		playSound("src/sound/BackgroundMusic.wav", true); 
+		
 		setVisible(true);
 		setSize(1000,900);
 		
@@ -119,6 +119,7 @@ public class Main extends JFrame {
 		{
 			meatX = (int)(Math.random()*(900-playerWidth));
 			meatY = (int)(Math.random()*(900-playerHeight-30))+30;
+			playSound("src/sound/Eat.wav", false);
 		}
 	}
 

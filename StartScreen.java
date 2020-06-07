@@ -37,10 +37,11 @@ public class StartScreen extends JFrame {
 	private JButton exitButton = new JButton(exitButtonBasicImage);
 	private JButton startButton = new JButton(startButtonBasicImage);
 	private JButton quitButton = new JButton(quitButtonBasicImage);
-
+	private Clip clip;
 	private int mouseX, mouseY;
 
 	public StartScreen() {	
+		playSound("src/sound/navi.wav", true);
 		setUndecorated(true);
 		setTitle("Start Screen");
 		setSize(1000, 900);
@@ -169,6 +170,23 @@ public class StartScreen extends JFrame {
 		add(menuBar);
 
 	}
+	public void playSound(String pathName, boolean isLoop) {
+		try {
+			clip = AudioSystem.getClip();
+			File audioFile = new File(pathName);
+			AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+			clip.open(audioStream);
+			clip.start();
+			if (isLoop)
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}	
 
 	public void paint(Graphics g) {
 		screenImage = createImage(1000, 900);
