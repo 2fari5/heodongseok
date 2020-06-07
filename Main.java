@@ -20,32 +20,46 @@ public class Main extends JFrame {
 	private Graphics screenGraphic;
 	private Clip clip;
 	private int fishX, fishY;
-	private int score;
+	private int score, Time;
+	private int meatX, meatY;
     
-	
-	private Image player = new ImageIcon("src/images/kitty1.png").getImage();
+	private Image player = new ImageIcon("src/images/pig.png").getImage();
     private Image background = new ImageIcon("src/images/h2.png").getImage();
-    private Image fish = new ImageIcon("src/images/fish1.png").getImage();
+    private Image fish = new ImageIcon("src/images/fish.png").getImage();
+    private Image meat = new ImageIcon("src/images/meat.png").getImage();
+    
 
 	private int playerX, playerY;
 	private int playerWidth = player.getWidth(null);
 	private int playerHeight = player.getHeight(null);
-
+	private int fishWidth = fish.getWidth(null);
+	private int fishHeight = fish.getHeight(null);
+	private int meatWidth = meat.getWidth(null);
+	private int meatHeight = meat.getHeight(null);
 	private boolean up, down, left, right;
 
 	public Main() {
 		setTitle("Kitty Game");
-		playSound("src/sound/BGM.wav", true); 
+		
 		setVisible(true);
 		setSize(1000,900);
-		fishX = 250;
-		fishY = 250;
 		score = 0;
+		fishX = 250;
+		fishY = 400;
+		meatX = 600;
+		meatY = 100;
+		playerX=10;
+		playerY=35;
+		
+		GUI gui = new GUI();
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
+				int keyCode = e.getKeyCode();
+				if (keyCode == KeyEvent.VK_ESCAPE)
+					gui.setVisible(true);	
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_UP:
 					up = true;
@@ -82,13 +96,39 @@ public class Main extends JFrame {
 		
 		while (true) {
 			try {
-				Thread.sleep(20);
+				Thread.sleep(2);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			keyProcess();
+			Eatfish();
+			Eatmeat();
 
 		}
+	}
+	public void Eatfish(){
+	
+		
+		if (playerX + playerWidth > fishX && fishX + fishWidth > playerX && playerY + playerHeight > fishY && fishY + fishHeight > playerY) {
+		    playSound("src/sound/Eat.wav", false);
+			score+=100;
+			fishX = (int)(Math.random()*(900-playerWidth));
+			fishY = (int)(Math.random()*(900-playerHeight-30))+30;
+		
+	}
+	}
+	
+	public void Eatmeat() {
+	
+		if (playerX + playerWidth > meatX && meatX + meatWidth > playerX && playerY + playerHeight > meatY && meatY + meatHeight > playerY) {
+			playSound("src/sound/Eat.wav", false);
+			score+=200;
+			meatX = (int)(Math.random()*(900-playerWidth));
+			meatY = (int)(Math.random()*(900-playerHeight-30))+30;
+			
+		
+	
+	}
 	}
 	public void playSound(String pathName, boolean isLoop) {
 		try {
@@ -134,12 +174,18 @@ public class Main extends JFrame {
 		g.setFont(new Font("Arial", Font.BOLD, 20));
 		g.drawString("SCORE : " + score, 330, 60);
 		g.drawImage(fish, fishX, fishY, null);
-	
+		g.drawImage(meat, meatX, meatY, null);
 
 		this.repaint();
 	}
 
 	public static void main(String[] args) {
+		new StartScreen();
+		try {
+			Thread.sleep(7000);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
 		new Main();
 	}
 
