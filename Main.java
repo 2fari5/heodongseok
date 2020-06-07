@@ -34,6 +34,8 @@ public class Main extends JFrame {
 	private int playerHeight = player.getHeight(null);
 	private int fishWidth = fish.getWidth(null);
 	private int fishHeight = fish.getHeight(null);
+	private int meatWidth = meat.getWidth(null);
+	private int meatHeight = meat.getHeight(null);
 	private boolean up, down, left, right;
 
 	public Main() {
@@ -100,16 +102,29 @@ public class Main extends JFrame {
 			}
 			keyProcess();
 			Eatfish();
+			Eatmeat();
 
 		}
 	}
-	public void Eatfish()
-	{
-		if (playerX + playerWidth > fishX && fishX + fishWidth > playerX && playerY + playerHeight > fishY && fishY + fishHeight > playerY)
-		{
+	public void Eatfish(){
+	
+		
+		if (playerX + playerWidth > fishX && fishX + fishWidth > playerX && playerY + playerHeight > fishY && fishY + fishHeight > playerY) {
+		    score+=100;
 			fishX = (int)(Math.random()*(501-playerWidth));
 			fishY = (int)(Math.random()*(501-playerHeight-30))+30;
-		}
+		
+	}
+	}
+	
+	public void Eatmeat() {
+	
+		if (playerX + playerWidth > meatX && meatX + meatWidth > playerX && playerY + playerHeight > meatY && meatY + meatHeight > playerY) {
+			score+=200;
+			meatX = (int)(Math.random()*(501-playerWidth));
+			meatY = (int)(Math.random()*(501-playerHeight-30))+30;
+	
+	}
 	}
 	public void playSound(String pathName, boolean isLoop) {
 		try {
